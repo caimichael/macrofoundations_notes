@@ -172,8 +172,12 @@ for x in range(len(p)):
 Elogm = kappa1_
 
 logEm = []
+print(len(p))
+print()
 for x in range(len(p)):
-    logEm.append(math.log(p[x]*m[x]))
+    if (p[x]*m[x]) > 0:
+    # had to add this cuz i was getting an error at the point where p*m becomes negative
+        logEm.append(math.log(p[x]*m[x]))
 
 
 Lm = []
@@ -194,9 +198,12 @@ q1 = []
 for x in range(len(p)):
     q1.append(p[x]*m[x])
 
+q1 = sum(q1)
+
 pstar = []
 for x in range(len(p)):
-    pstar.append(p[x]*m[x]/q1[x])
+    print(p[x]*m[x])
+    pstar.append(p[x]*m[x]/q1)
 
 checkonepstar = sum(pstar)
 
@@ -210,12 +217,10 @@ qe = sum(array)
 
 
 
-# % p*
-# q1 = p'*m
-# pstar = p.*m/q1;
-# checkonepstar = sum(pstar)
-# % equity
-# qe = sum(p.*m.*g)
+# Figures
+FontSize = 12
+FontName = 'Helvetica'  # or 'Times'
+LineWidth = 1.5
 
 
 
@@ -223,5 +228,18 @@ qe = sum(array)
 
 
 
+# figure(1)
+# bar(z, [p pstar])
+# line([0 0], [-0.005 0.045])
+# title('True (blue) and Risk-Neutral (red) Probabilities','FontSize',FontSize,'FontName',FontName)
+# xlabel('State z','FontSize',FontSize,'FontName',FontName)
+# ylabel('Probability density function','FontSize',FontSize,'FontName',FontName)
+print(z)
+print()
+print(pstar)
+
+plt.bar(z,p)
+plt.bar(z,pstar)
+plt.show()
 
 print("done")
