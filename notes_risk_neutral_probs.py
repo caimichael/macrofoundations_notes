@@ -61,6 +61,8 @@ for item in range(len(z)):
 
 checkprobssum2one = sum(p)*dz/math.sqrt(2*math.pi)
 
+print("checkprobssum2one: " + str(checkprobssum2one))
+
 # changing p array
 probSum = sum(p)
 for x in range(len(p)):
@@ -101,29 +103,37 @@ kappa1 = []
 for x in range(len(p)):
     kappa1.append(p[x]*logg[x])
 
+kappa1 = sum(kappa1)
+
 
 # generating dev array
 dev = []
 for x in range(len(logg)):
-    dev.append(logg[x]-kappa1[x])
+    dev.append(logg[x]-kappa1)
 
 # generating kappa2 array
 kappa2 = []
 for x in range(len(p)):
     kappa2.append(p[x]*dev[x]**2)
 
+kappa2 = sum(kappa2)
+
 # generating kappa3 array
 kappa3 = []
 for x in range(len(p)):
     kappa3.append(p[x]*dev[x]**3)
+kappa3 = sum(kappa3)
+
 
 # generating kappa4 array
 kappa4 = []
 for x in range(len(p)):
     kappa4.append(p[x]*dev[x]**4)
+kappa4 = sum(kappa4)
 
 
-#[kappa1 sqrt(kappa2) kappa3/kappa2^1.5 kappa4/kappa2^2-3]
+
+print([kappa1, math.sqrt(kappa2), kappa3/kappa2**1.5, kappa4/kappa2**2-3])
 #
 # pricing kernel
 # generating m array
@@ -131,7 +141,6 @@ m = []
 for x in range(len(g)):
     m.append(beta*g[x]**(-alpha))
 
-print(m)
 
 #m = beta*g.^(-alpha);
 # entropy
@@ -149,46 +158,54 @@ for x in range(len(m)):
 kappa1_ = []
 for x in range(len(p)):
     kappa1_.append(p[x]*logm[x])
+kappa1_ = sum(kappa1_)
+
 
 dev_ = []
 for x in range(len(logm)):
-    dev_.append(logm[x]-kappa1_[x])
+    dev_.append(logm[x]-kappa1_)
 
 kappa2_ = []
 for x in range(len(p)):
     kappa2_.append(p[x]*dev[x]**2)
+kappa2_ = sum(kappa2_)
+
 
 kappa3_ = []
 for x in range(len(p)):
     kappa3_.append(p[x]*dev[x]**3)
+kappa3_ = sum(kappa3_)
+
 
 kappa4_ = []
 for x in range(len(p)):
     kappa4_.append(p[x]*dev[x]**4)
+kappa4_ = sum(kappa4_)
 
 
-# [kappa1 sqrt(kappa2) kappa3/kappa2^1.5 kappa4/kappa2^2-3]
+
+print([kappa1_, math.sqrt(kappa2_), kappa3_/kappa2_**1.5, kappa4_/kappa2_**2-3])
 
 Elogm = kappa1_
+print("Elogm: " + str(Elogm))
 
-logEm = []
-print(len(p))
-print()
+pm = []
 for x in range(len(p)):
-    if (p[x]*m[x]) > 0:
-    # had to add this cuz i was getting an error at the point where p*m becomes negative
-        logEm.append(math.log(p[x]*m[x]))
+    pm.append(p[x]*m[x])
+
+logEm = math.log(sum(pm))
+print("logEm: " + str(logEm))
+
+Lm = logEm - Elogm
+print("Lm: " + str(Lm))
 
 
-Lm = []
-for x in range(len(logEm)):
-    Lm.append(logEm[x] - Elogm[x])
 
 
 
-Lm_lognormal = []
-for x in range(len(kappa2_)):
-    Lm_lognormal.append(kappa2_[x]/2)
+Lm_lognormal = kappa2_/2
+print("Lm_lognormal: " + str(Lm_lognormal))
+
 
 
 
@@ -202,11 +219,10 @@ q1 = sum(q1)
 
 pstar = []
 for x in range(len(p)):
-    print(p[x]*m[x])
     pstar.append(p[x]*m[x]/q1)
 
 checkonepstar = sum(pstar)
-
+print("checkonepstar: " + str(checkonepstar))
 # equity
 
 array = []
@@ -234,12 +250,13 @@ LineWidth = 1.5
 # title('True (blue) and Risk-Neutral (red) Probabilities','FontSize',FontSize,'FontName',FontName)
 # xlabel('State z','FontSize',FontSize,'FontName',FontName)
 # ylabel('Probability density function','FontSize',FontSize,'FontName',FontName)
-print(z)
 print()
-print(pstar)
 
-plt.bar(z,p)
-plt.bar(z,pstar)
+plt.title("True (blue) and Risk-Neutral (red) Probabilities")
+plt.xlabel("State z")
+plt.ylabel("Probability density function")
+plt.bar(z,p,0.1,)
+plt.bar(z,pstar,0.1,color='r')
 plt.show()
 
 print("done")
