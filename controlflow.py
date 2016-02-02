@@ -91,11 +91,33 @@ for x in list2:
 
 
 
+
+
+
 print(' ')
 print('anonymous functions')
 print('--------------------------------------------------------------')
 
 print(' ')
 print('x-squared')
-f = @(x) x^2
-f(7)
+
+def f(x):
+    return(x^2)
+
+print(f(7))
+
+
+
+
+
+
+
+print(' ')
+print('vectorized')
+
+def g(x):
+    answers = []
+    for item in x:
+        answer.append(item**2)
+
+f([3, 7])
