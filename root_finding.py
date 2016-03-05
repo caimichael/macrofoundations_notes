@@ -41,6 +41,28 @@ print("answer: " + str((x_low + x_high)/2))
 print("2. Newton's method")
 
 
+a = 8
+maxit = 50
+
+# starting values
+
+x_now = 10
+# just a guess to start with
+
+f_now = x_now**2 - a
+# the function evaluated at our guess
+
+for i in range(maxit):
+    fp_now = 2 * x_now
+    # the derivative evaluated at our guess
+    x_now = x_now - f_now/fp_now;
+    f_now = x_now**2 - a;
+    # as we run this a buncha times, x_now approaches the square root
+
+
+
+print("answer: " + str(x_now))
+
 
 
 
