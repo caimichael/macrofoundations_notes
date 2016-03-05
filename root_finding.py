@@ -65,6 +65,31 @@ print("answer: " + str(x_now))
 
 
 
+print("3. Secant method")
+
+
+# starting values
+a = 8
+maxit = 50
+x_before = 8
+x_now = 10
+f_before = x_before**2 - a
+f_now = x_now**2 - a
+
+for i in range(maxit):
+    fp = (f_now-f_before)/(x_now-x_before)
+    x_now = x_now - f_now/fp;
+    f_now = x_now**2 - a;
+
+
+
+print("answer: " + str(x_now))
+
+
+
+
+
+
 
 
 
